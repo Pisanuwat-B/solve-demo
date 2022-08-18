@@ -1,0 +1,35 @@
+.quiz-question-container,
+.quiz-answer-container {
+  padding: 30px;
+}
+
+.quiz-title {
+  font-size: 14px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.quiz-progress {
+  font-size: 14px;
+}
+
+.quiz-question {
+  font-size: 28px;
+}
+
+.quiz-answer-container {
+  background-color: #f1f1f1;
+}
+
+.quiz-answer-description {
+  margin-bottom: 14px;
+}
+
+.quiz-choice-text {
+  margin: 3px 0 3px 8px;
+}
+
+.quiz-choice {
+  display: flex;
+  cursor: pointer;
+}

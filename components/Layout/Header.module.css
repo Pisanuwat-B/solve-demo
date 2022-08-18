@@ -1,0 +1,45 @@
+.header {
+  padding: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  box-shadow: 0 1px 5px 1px rgb(20 20 20 / 10%);
+}
+
+.header .header-stats .level {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 10px 0;
+}
+
+.header .header-stats .day {
+  font-size: 16px;
+  margin: 10px 0;
+  border: 1px solid black;
+  padding: 2px 5px 2px 5px;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+.header .header-stats .day .icon {
+  color: white;
+  background: black;
+  border-radius: 50%;
+  font-weight: 100;
+  padding: 2px 3px;
+  font-size: 14px;
+  position: relative;
+  top: 2px;
+}
+
+.header .header-profile .profile-wrapper {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 1px solid grey;
+  background: grey;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

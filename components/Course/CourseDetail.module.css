@@ -1,0 +1,38 @@
+.course-item {
+  margin: 20px 0;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  background: #fff;
+  min-height: 120px;
+  cursor: pointer;
+  flex-direction: column;
+}
+
+.course-detail {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 20px;
+  padding: 0 20px;
+}
+
+.course-level {
+  font-size: 16px;
+  color: #1c1d1f;
+}
+
+.course-subtitle {
+  font-size: 14px;
+  color: #828282;
+}
+
+.course-title {
+  font-size: 20px;
+}
+
+.course-price {
+  color: #1c1d1f;
+  margin-top: 12px;
+}

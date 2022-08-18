@@ -1,0 +1,31 @@
+.button {
+  color: #fff;
+  text-align: center;
+  padding: 8px 0;
+  margin: 10px 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.big {
+  padding: 18px 0;
+}
+
+.small {
+  display: inline-block;
+  font-size: 12px;
+  padding: 4px 12px;
+  margin-right: 12px;
+}
+
+.red {
+  background: #e24040;
+}
+
+.green {
+  background: #5ab873;
+}
+
+.black {
+  background: #2b2b2b;
+}

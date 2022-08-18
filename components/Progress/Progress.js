@@ -1,0 +1,15 @@
+import CurrentProgress from "./CurrentProgress";
+import FullwidthBtn from "../UI/FullwidthBtn";
+
+import styles from './Progress.module.css';
+
+const Progress = (props) => {
+  return (
+    <div className={styles.progress}>
+      <CurrentProgress />
+      <FullwidthBtn color="red" size="big">ผลวิเคราะห์ของฉันด้วย AI &gt;</FullwidthBtn>
+    </div>
+  );
+};
+
+export default Progress;

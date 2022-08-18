@@ -1,0 +1,16 @@
+.current-progress {
+  background: #e4e4e4;
+  border-radius: 12px;
+  margin-bottom: 60px;
+}
+
+.current-progress .wrapper {
+  background: #fff;
+  padding: 10px;
+  border-radius: 12px;
+}
+
+.current-progress .progress-content {
+  text-align: center;
+  padding: 10px 0;
+}

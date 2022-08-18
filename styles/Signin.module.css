@@ -1,0 +1,62 @@
+.signin-page {
+  background: #f1f1f1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.signin-header {
+  font-size: 28px;
+  margin-top: 60px;
+}
+
+.signin-options {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: stretch;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.signin-options button {
+  width: 200px;
+  padding: 12px 10px;
+  border-width: 1px;
+  border-radius: 8px;
+  margin: 9px 0;
+  cursor: pointer;
+  border-color: #bdbdbd;
+  border-style: solid;
+}
+
+.signin-options svg {
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+.signin-separater {
+  margin: 40px 0;
+  font-size: 14px;
+}
+
+.apple {
+  background: #000;
+  color: #fff;
+}
+
+.facebook {
+  background: #1976d2;
+  color: #fff;
+}
+
+.google {
+  background: #fff;
+}
+
+.email {
+  background: #c7c7c7;
+}

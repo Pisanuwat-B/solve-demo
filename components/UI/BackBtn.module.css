@@ -1,0 +1,8 @@
+.backBtn {
+  margin-left: 20px;
+  margin-top: 10px;
+  position: fixed;
+  font-size: 20px;
+  color: #949494;
+  cursor: pointer;
+}
