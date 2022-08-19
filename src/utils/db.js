@@ -8,6 +8,8 @@ import {
   where,
   orderBy,
   limit,
+  updateDoc,
+  arrayUnion,
 } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 
@@ -27,6 +29,43 @@ export const addUser = async (authUser) => {
   console.log(authUser);
   const res = await setDoc(doc(db, 'user', authUser.uid), { ...userData });
   return res;
+};
+
+export const addUserStats = async (uid) => {
+  const userData = {
+    ownCourse: []
+  };
+  const res = await setDoc(doc(db, 'userStats', uid), { ...userData }, { merge: true });
+  return res;
+};
+
+export const checkStatsExist = async (uid) => {
+  const docRef = doc(db, 'userStats', uid);
+  const querySnapshot = await getDoc(docRef);
+  return querySnapshot.data();
+}
+
+export const checkIfOwn = async (uid, courseId) => {
+  const docRef = doc(db, 'userStats', uid);
+  const querySnapshot = await getDoc(docRef);
+  const ownCourse = querySnapshot.data().ownCourse;
+  const checkId = obj => obj.name === courseId;
+  return ownCourse.some(checkId);
+};
+
+export const addOwnCourse = async (uid, courseId) => {
+  const docRef = doc(db, 'userStats', uid);
+  await updateDoc(docRef, {
+    ownCourse: arrayUnion({name: courseId, progress: 0}),
+  });
+};
+
+export const addQuestion = async (data) => {
+  console.log('add Q')
+  const docRef = doc(db, 'question', data.courseID);
+  await updateDoc(docRef, {
+    sets: arrayUnion({data})
+  })
 };
 
 export const getAllCourse = async () => {
@@ -101,6 +140,5 @@ export const getCoursesByLevel = async (level) => {
 export const getCoursesByID = async (id) => {
   const docRef = doc(db, 'course', id);
   const querySnapshot = await getDoc(docRef);
-  console.log(querySnapshot.data());
   return querySnapshot.data();
 };

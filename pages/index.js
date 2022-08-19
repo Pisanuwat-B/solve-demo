@@ -43,9 +43,9 @@ const listCourses = [
 ];
 
 export default function Home(props) {
-  useEffect(()=>{
-    console.log(props)
-  },[props])
+  // useEffect(()=>{
+  //   console.log(props)
+  // },[props])
   
   return (
     <>

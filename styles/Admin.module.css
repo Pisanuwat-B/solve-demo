@@ -1,0 +1,22 @@
+.solution-label {
+  display: flex;
+  flex-direction: column;
+  border: 1px dashed grey;
+  border-radius: 10px;
+  text-align: center;
+  padding: 10px 0;
+  cursor: pointer;
+}
+
+.solution-label span {
+  font-size: 12px;
+}
+
+.solution-label svg {
+  align-self: center;
+  font-size: 40px;
+}
+
+.solution-label input {
+  display: none;
+}

@@ -12,7 +12,6 @@ import styles from '../styles/Signin.module.css';
 const Signin = () => {
   const { user, login } = useAuth();
   const router = useRouter();
-  
   if (user) {
     router.push(router.query.next || '/');
   }

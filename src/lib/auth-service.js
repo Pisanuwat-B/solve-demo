@@ -1,7 +1,7 @@
-import { GoogleAuthProvider, signInWithPopup, } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from './firebase';
-import { createContext, useContext, useState } from 'react';
-import { addUser } from '../utils/db';
+import { createContext, useContext, useState, useEffect } from 'react';
+import { addUser, checkStatsExist, addUserStats } from '../utils/db';
 
 const authContextDefaultValues = {
   user: {},
@@ -22,12 +22,14 @@ export function AuthProvider({ children }) {
   const login = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
-        // const credential = GoogleAuthProvider.credentialFromResult(result);
-        // const token = credential?.accessToken;
         const user = result.user;
         setUser(user);
         addUser(user);
-        console.log({ user });
+        checkStatsExist(user.uid).then((result) => {
+          if (!result) {
+            addUserStats(user.uid);
+          }
+        });
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -49,6 +51,12 @@ export function AuthProvider({ children }) {
     login,
     logout,
   };
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      setUser(user);
+    });
+  }, []);
 
   return (
     <>

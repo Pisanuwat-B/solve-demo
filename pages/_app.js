@@ -7,7 +7,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import { useRouter } from 'next/router';
 import { AuthProvider } from '../src/lib/auth-service';
-import { getPopularCourse, getLestPopularCourse, getCoursesByID } from '../src/utils/db';
+import { getPopularCourse, getLestPopularCourse } from '../src/utils/db';
 
 import NavBar from '../components/Layout/NavBar';
 config.autoAddCss = false;

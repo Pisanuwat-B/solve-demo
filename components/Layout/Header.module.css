@@ -16,20 +16,17 @@
   font-size: 16px;
   margin: 10px 0;
   border: 1px solid black;
-  padding: 2px 5px 2px 5px;
+  padding: 0 10px;
   border-radius: 12px;
   display: inline-block;
 }
 
-.header .header-stats .day .icon {
-  color: white;
-  background: black;
-  border-radius: 50%;
-  font-weight: 100;
-  padding: 2px 3px;
-  font-size: 14px;
-  position: relative;
-  top: 2px;
+.header .header-stats .day span {
+  vertical-align: middle;
+}
+
+.header .header-stats .day svg {
+  vertical-align: middle;
 }
 
 .header .header-profile .profile-wrapper {
@@ -42,4 +39,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.logo-container .logo {
+  font-size: 22px;
+}
+
+.logo-container .logo-desc {
+  font-size: 12px;
+}
+
+
+.btn-container .btn {
+  border: 1px solid #5ab873;
+  padding: 5px 15px;
+  border-radius: 8px;
+  background: #5ab873;
+  color: white;
+  cursor: pointer;
 }
