@@ -6,6 +6,7 @@ import {
   faLightbulb,
   faBars,
 } from '@fortawesome/free-solid-svg-icons';
+import { useRouter } from 'next/router';
 
 import NavItemMobile from './NavItemMobile';
 import styles from './NavBar.module.css';
@@ -22,8 +23,24 @@ const NavBar = () => {
   const [windowDimension, setWindowDimension] = useState(null);
   const [activeIdx, setActiveIdx] = useState(0);
 
+  const router = useRouter();
+
   useEffect(() => {
     setWindowDimension(window.innerWidth);
+    switch (router.pathname) {
+      case '/my-courses':
+        setActiveIdx(1);
+        break;
+      case '/premium':
+        setActiveIdx(2);
+        break;
+      case '/analyze':
+        setActiveIdx(3);
+        break;
+      case '/setting':
+        setActiveIdx(4);
+        break;
+    }
   }, []);
 
   useEffect(() => {

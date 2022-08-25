@@ -5,7 +5,7 @@ import NavBar from '../components/Layout/NavBar';
 const PremiumPage = () => {
   return (
     <>
-    <Head>
+      <Head>
         <title>SOLVE - Practicing makde easy</title>
         <meta
           name="description"
@@ -14,7 +14,10 @@ const PremiumPage = () => {
         <link rel="icon" href="/bacon.svg" />
       </Head>
       <main>
-      Premium Page
+        <div className="blank-box">
+          <h1>Premium Page</h1>
+          <div>There is nothing here at the moment</div>
+        </div>
       </main>
     </>
   );

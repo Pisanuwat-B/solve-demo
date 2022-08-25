@@ -14,7 +14,10 @@ const AnalyzePage = () => {
         <link rel="icon" href="/bacon.svg" />
       </Head>
       <main>
-        Analyze Page
+      <div className="blank-box">
+          <h1>Analyze Page</h1>
+          <div>There is nothing here at the moment</div>
+        </div>
       </main>
     </>
   );

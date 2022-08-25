@@ -54,6 +54,13 @@ export const checkIfOwn = async (uid, courseId) => {
   return ownCourse.some(checkId);
 };
 
+export const getUserOwnCourse = async (id) => {
+  const docRef = doc(db, 'userStats', id);
+  const querySnapshot = await getDoc(docRef);
+  return querySnapshot.data();
+};
+
+
 // QUESTION ----
 
 export const addQuestion = async (courseID, data) => {
@@ -65,6 +72,14 @@ export const addQuestion = async (courseID, data) => {
 
 export const getQuestionByID = async (id) => {
   const docRef = doc(db, 'question', id);
+  const querySnapshot = await getDoc(docRef);
+  return querySnapshot.data();
+};
+
+// HELPER ----
+
+export const getHelperByID = async (id) => {
+  const docRef = doc(db, 'helper', id);
   const querySnapshot = await getDoc(docRef);
   return querySnapshot.data();
 };

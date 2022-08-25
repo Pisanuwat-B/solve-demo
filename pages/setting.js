@@ -14,7 +14,10 @@ const SettingPage = () => {
         <link rel="icon" href="/bacon.svg" />
       </Head>
       <main>
-        Setting Page
+      <div className="blank-box">
+          <h1>Setting Page</h1>
+          <div>There is nothing here at the moment</div>
+        </div>
       </main>
     </>
   );

@@ -1,0 +1,27 @@
+.user-course-container {
+  display: flex;
+  width: 100vw;
+}
+
+.user-course {
+  display: inline-block;
+  width: 50%;
+  min-height: 150px;
+  margin: 20px 10px;
+  cursor: pointer;
+}
+
+.couese-img {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.course-name {
+  font-size: 18px;
+  padding-top: 10px;
+}
+
+.course-sub {
+  font-size: 14px;
+}

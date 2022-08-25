@@ -1,5 +1,5 @@
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import Avatar from '@mui/material/Avatar';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { useAuth } from '../../src/lib/auth-service';
@@ -24,9 +24,7 @@ const Header = () => {
             </div>
           </div>
           <div className={styles['header-profile']}>
-            <div>
-              <Avatar alt={user.displayName} src={user.photoURL} sx={{ width: 60, height: 60 }} onClick={handleLogout}/>
-            </div>
+            <Image src={user.photoURL} alt={user.displayName} width={60} height={60} onClick={handleLogout}/>
           </div>
         </header>
       ) : (

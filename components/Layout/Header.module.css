@@ -29,16 +29,10 @@
   vertical-align: middle;
 }
 
-.header .header-profile .profile-wrapper {
-  width: 60px;
+.header .header-profile {
   height: 60px;
   border-radius: 50%;
-  border: 1px solid grey;
-  background: grey;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .logo-container .logo {

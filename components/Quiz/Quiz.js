@@ -73,6 +73,7 @@ const Quiz = (props) => {
 
   useEffect(() => {
     if (props.data) {
+      console.log(props.data)
       setLoader(false);
       // console.log(props.data);
       // console.log(props.data[0]);
@@ -143,7 +144,7 @@ const Quiz = (props) => {
                 <div className='quiz-solution'>SOLUTION</div>
               </div>
             )}
-            <SpeechBtn />
+            <SpeechBtn questionId={props.data[currentQuestion].questionId}/>
           </div>
         </div>
       ) : (
