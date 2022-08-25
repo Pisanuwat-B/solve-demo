@@ -12,6 +12,15 @@ import { getPopularCourse, getLestPopularCourse } from '../src/utils/db';
 import NavBar from '../components/Layout/NavBar';
 config.autoAddCss = false;
 
+const originalError = console.error;
+
+console.error = (...args) => {
+  if (/Warning.*Function components cannot be given refs/.test(args[0])) {
+    return;
+  }
+  originalError.call(console, ...args);
+};
+
 function App({ Component, pageProps }) {
   const router = useRouter();
   const showNav =

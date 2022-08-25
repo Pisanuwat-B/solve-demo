@@ -1,17 +1,23 @@
+import * as React from 'react';
 import { useState } from 'react';
 import Head from 'next/head';
 import { Container, TextField, Grid, Button } from '@mui/material';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import Snackbar from '@mui/material/Snackbar';
+import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
 
 import { addQuestion } from '../src/utils/db';
 import { storage } from '../src/lib/firebase';
 
 import styles from '../styles/Admin.module.css';
+import MuiAlert from '@mui/material/Alert';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const AdminPage = () => {
   const initailState = {
-    courseID: '',
     number: '',
     correct: '',
     question: '',
@@ -24,15 +30,11 @@ const AdminPage = () => {
     },
     solution: '',
   };
-
+  const [courseID, setCourseID] = useState('');
   const [question, setQuestion] = useState(initailState);
   const [questionFile, setQuestionFile] = useState('');
   const [solutionFile, setSolutionFile] = useState('');
-
-  // const handleClick = () => {
-  //   console.log(question);
-  //   addQuestion(question);
-  // };
+  const [openSnack, setOpenSnack] = useState(false);
 
   const handleQuestionFileChange = (e) => {
     console.log('file change');
@@ -53,32 +55,29 @@ const AdminPage = () => {
   const handleUpload = async () => {
     const questionStorageRef = ref(storage, `/question/${questionFile.name}`);
     const solutionStorageRef = ref(storage, `/solution/${solutionFile.name}`);
+    const uploadQuestion = await uploadBytes(questionStorageRef, questionFile);
+    const uploadSolution = await uploadBytes(solutionStorageRef, solutionFile);
+    const questionURL = await getDownloadURL(uploadQuestion.ref);
+    const solutionURL = await getDownloadURL(uploadSolution.ref);
+    setQuestion({ ...question, questionImage: questionURL });
+    setQuestion({ ...question, solution: solutionURL });
+    addQuestion(courseID, question);
+    clearForm();
+    setOpenSnack(true)
+  };
 
-    const uploadQuestionTask = uploadBytesResumable(questionStorageRef, questionFile);
-    const uploadSolutionTask = uploadBytesResumable(solutionStorageRef, questionFile);
-    
-    uploadQuestionTask.on(
-      (err) => console.log(err),
-      () => {
-        getDownloadURL(uploadQuestionTask.snapshot.ref).then((url) => {
-          console.log(url)
-          setQuestion({ ...question, questionImage: url })
-          uploadSolutionTask.on(
-            (err) => console.log(err),
-            () => {
-              getDownloadURL(uploadSolutionTask.snapshot.ref).then((url) => {
-                console.log(url)
-                setQuestion({ ...question, solution: url })
-                addQuestion(question);
-              });
-            }
-          );
-        });
-      }
-    );
-    
-    
-    // addQuestion(question);
+  const clearForm = () => {
+    setCourseID('');
+    setQuestion(initailState);
+    setQuestionFile('');
+    setSolutionFile('');
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSnack(false);
   };
 
   return (
@@ -93,16 +92,22 @@ const AdminPage = () => {
       </Head>
       <main>
         <Container>
+          <Snackbar open={openSnack} autoHideDuration={2000} onClose={handleClose} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} >
+            <Alert
+              severity="success"
+              sx={{ width: '100%' }}
+            >
+              Add Question Successful
+            </Alert>
+          </Snackbar>
           <Grid container spacing="5">
             <Grid item xs={12}>
               <TextField
                 fullWidth
                 label="Course ID"
                 margin="normal"
-                value={question.courseID}
-                onChange={(e) =>
-                  setQuestion({ ...question, courseID: e.target.value })
-                }
+                value={courseID}
+                onChange={(e) => setCourseID(e.target.value)}
               />
             </Grid>
             <Grid item xs={2}>
@@ -219,17 +224,19 @@ const AdminPage = () => {
             </Grid>
           </Grid>
           <div>
-            {/* <div>
-              <Button variant="contained" onClick={handleClick} sx={{ mb: 2 }}>
-                Add Question
-              </Button>
-            </div> */}
             <div>
               <Button variant="contained" onClick={handleUpload} sx={{ mb: 2 }}>
-                Test Upload
+                Add Question
               </Button>
             </div>
           </div>
+          {/* <div>
+            <div>
+              <Button variant="contained" onClick={()=>{setOpenSnack(true)}} sx={{ mb: 2 }}>
+                Open Snackbar
+              </Button>
+            </div>
+          </div> */}
         </Container>
       </main>
     </>

@@ -19,7 +19,9 @@ const CoursePage = () => {
     if (courseID) {
       const fetchData = async () => {
         setCourseData(await getCoursesByID(courseID));
-        setOwn(await checkIfOwn(user.uid ,courseID));
+        if (user) {
+          setOwn(await checkIfOwn(user.uid ,courseID));
+        }
       };
       fetchData();
     }
@@ -42,7 +44,7 @@ const CoursePage = () => {
       </Head>
       <Header />
       <main>
-        <CourseDetail {...courseData} own={own} onClick={handleBuy} />
+        <CourseDetail {...courseData} own={own} onClick={handleBuy} id={courseID}/>
       </main>
     </>
   );

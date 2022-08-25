@@ -23,7 +23,7 @@ const CourseDetail = (props) => {
         <div className={styles['course-subtitle']}>{props.desc}</div>
         <div className={styles['course-price']}>{props.price} ฿</div>
         {props.own ? (
-          <Link href="/practice">
+          <Link href={"/practice/" + props.id} passHref>
             <FullwidthBtn color="red">
               <FontAwesomeIcon icon={faPlay} /> เริ่มเรียน
             </FullwidthBtn>

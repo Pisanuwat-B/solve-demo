@@ -2,6 +2,15 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  images: {
+    domains: ['firebasestorage.googleapis.com', 'picsum.photos'],
+  },
+}
+
+module.exports = {
+  images: {
+    domains: ['firebasestorage.googleapis.com', 'picsum.photos'],
+  },
 }
 
 module.exports = nextConfig

@@ -1,6 +1,15 @@
+.quiz-container {
+  min-height: 100vh;
+  background: #f1f1f1;
+}
+
 .quiz-question-container,
 .quiz-answer-container {
   padding: 30px;
+}
+
+.quiz-question-container {
+  background: #fff;
 }
 
 .quiz-title {
@@ -32,4 +41,7 @@
 .quiz-choice {
   display: flex;
   cursor: pointer;
+}
+.relative {
+  position: relative;
 }

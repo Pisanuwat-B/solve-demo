@@ -1,0 +1,12 @@
+.quiz-speech {
+  margin: 60px 0;
+  text-align: center;
+}
+
+.speech-icon-container {
+  display: inline-block;
+  padding: 10px 14px;
+  border: 1px solid grey;
+  border-radius: 50%;
+  cursor: pointer;
+}

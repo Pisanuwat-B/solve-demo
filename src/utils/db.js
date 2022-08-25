@@ -15,6 +15,7 @@ import { db } from '../lib/firebase';
 
 const courseRef = collection(db, 'course');
 
+// USER -----
 export const addUser = async (authUser) => {
   const userData = {
     displayName: authUser.displayName,
@@ -53,19 +54,27 @@ export const checkIfOwn = async (uid, courseId) => {
   return ownCourse.some(checkId);
 };
 
+// QUESTION ----
+
+export const addQuestion = async (courseID, data) => {
+  const docRef = doc(db, 'question', courseID);
+  await updateDoc(docRef, {
+    sets: arrayUnion(data)
+  })
+};
+
+export const getQuestionByID = async (id) => {
+  const docRef = doc(db, 'question', id);
+  const querySnapshot = await getDoc(docRef);
+  return querySnapshot.data();
+};
+
+// COURSE -----
 export const addOwnCourse = async (uid, courseId) => {
   const docRef = doc(db, 'userStats', uid);
   await updateDoc(docRef, {
     ownCourse: arrayUnion({name: courseId, progress: 0}),
   });
-};
-
-export const addQuestion = async (data) => {
-  console.log('add Q')
-  const docRef = doc(db, 'question', data.courseID);
-  await updateDoc(docRef, {
-    sets: arrayUnion({data})
-  })
 };
 
 export const getAllCourse = async () => {
