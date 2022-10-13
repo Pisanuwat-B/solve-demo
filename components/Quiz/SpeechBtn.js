@@ -112,7 +112,7 @@ const SpeechBtn = (props) => {
         studentId: user.uid,
         question: result.normalized,
       };
-      // addNoti(data);
+      addNoti(data);
     }
 
     // handleOpenModal();

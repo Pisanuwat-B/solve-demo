@@ -8,6 +8,8 @@ import {
   faMessage,
 } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
+import Image from 'next/image';
 
 import { useAuth } from '../../src/lib/auth-service';
 import NavItemMobile from './NavItemMobile';
@@ -34,7 +36,7 @@ const NavBar = (props) => {
 
   const { role } = useAuth();
   const router = useRouter();
-  const activeList = (role == 'student' ? STUDENT_MENU_LIST : TUTOR_MENU_LIST)
+  const activeList = role == 'student' ? STUDENT_MENU_LIST : TUTOR_MENU_LIST;
 
   useEffect(() => {
     switch (router.pathname) {
@@ -72,12 +74,15 @@ const NavBar = (props) => {
         </div>
       ) : (
         <div className={styles['nav-desktop-container']}>
-          <div className={styles['nav-desktop-logo']}>LOGO</div>
+          <Link href={'/'}>
+            <Image className={styles['nav-desktop-logo']} src={'/logo.png'} alt="Placeholder" width={60} height={60} />
+          </Link>
           <div className={styles['nav-desktop-items-wrapper']}>
-            <div className={styles['nav-desktop-item']}>Home</div>
-            <div className={styles['nav-desktop-item']}>Course</div>
-            <div className={styles['nav-desktop-item']}>Premium</div>
-            <div className={styles['nav-desktop-item']}>Analyze</div>
+            {activeList.map((menu, index) => (
+              <Link href={menu.href} key={index}>
+                <div className={styles['nav-desktop-item']}>{menu.text}</div>
+              </Link>
+            ))}
           </div>
         </div>
       )}
