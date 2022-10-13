@@ -92,7 +92,7 @@ export default function Home(props) {
             <FontAwesomeIcon icon={faPlay} /> ดูคอร์สทั้งหมด
           </FullwidthBtn>
           <FullwidthBtn color="red" onClick={testnoti}>
-            <FontAwesomeIcon icon={faPlay} /> Send test noti to tutor
+            <FontAwesomeIcon icon={faPlay} /> Test Button
           </FullwidthBtn>
         </div>
       </main>
