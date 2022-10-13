@@ -9,7 +9,7 @@ import Progress from '../components/Progress/Progress';
 import CourseSlider from '../components/Course/CourseSlider';
 import CourseList from '../components/Course/CourseList';
 import FullwidthBtn from '../components/UI/FullwidthBtn';
-import { getPopularCourse, getLestPopularCourse } from '../src/utils/db';
+import { getPopularCourse, getLestPopularCourse, changeToTutor } from '../src/utils/db';
 import { useAuth } from '../src/lib/auth-service';
 
 import styles from '../styles/Home.module.css';
@@ -61,6 +61,7 @@ export default function Home(props) {
 
   const testnoti = () => {
     console.log('click click');
+    changeToTutor(user.uid);
   }
 
   return (
@@ -92,7 +93,7 @@ export default function Home(props) {
             <FontAwesomeIcon icon={faPlay} /> ดูคอร์สทั้งหมด
           </FullwidthBtn>
           <FullwidthBtn color="red" onClick={testnoti}>
-            <FontAwesomeIcon icon={faPlay} /> Test Button
+            <FontAwesomeIcon icon={faPlay} /> Tap here to re-login as tutor
           </FullwidthBtn>
         </div>
       </main>

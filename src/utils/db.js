@@ -35,11 +35,19 @@ export const addUser = async (authUser) => {
 export const addUserStats = async (uid) => {
   const userData = {
     ownCourse: [],
+    noti: [],
     role: 'student',
     FCMToken: '',
   };
   const res = await setDoc(doc(db, 'userStats', uid), { ...userData }, { merge: true });
   return res;
+};
+
+export const changeToTutor = async (uid) => {
+  const docRef = doc(db, 'userStats', uid);
+  await updateDoc(docRef, {
+    role: 'tutor'
+  });
 };
 
 export const addFMCToken = async (uid, token) => {
@@ -87,16 +95,6 @@ export const getUserOwnCourse = async (id) => {
   const querySnapshot = await getDoc(docRef);
   return querySnapshot.data();
 };
-
-// export const getNoti = async (id) => {
-//   var noti;
-//   const snap = onSnapshot(doc(db, 'userStats', id), (doc) => {
-//     console.log("Current data: ", doc.data().noti);
-//     noti = doc.data().noti;
-//   });
-//   console.log(noti);
-//   return noti;
-// };
 
 export const addNoti = async(data) => {
   let tutorList = await getTutorList();
