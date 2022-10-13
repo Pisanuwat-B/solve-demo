@@ -7,7 +7,7 @@ import { useAuth } from '../../src/lib/auth-service';
 import styles from './Header.module.css';
 
 const Header = () => {
-  const { user, logout } = useAuth();
+  const { user, role, logout } = useAuth();
 
   const handleLogout = () => {
     logout();
@@ -19,6 +19,7 @@ const Header = () => {
         <header className={styles.header}>
           <div className={styles['header-stats']}>
             <p className={styles.level}>{user.displayName}</p>
+            <div>{role}</div>
             <div className={styles.day}>
               <span>Rank: Diamond</span> <AddCircleIcon />
             </div>

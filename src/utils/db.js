@@ -10,6 +10,7 @@ import {
   limit,
   updateDoc,
   arrayUnion,
+  onSnapshot ,
 } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 
@@ -27,17 +28,44 @@ export const addUser = async (authUser) => {
     photoURL: authUser.photoURL,
     uid: authUser.uid,
   };
-  console.log(authUser);
   const res = await setDoc(doc(db, 'user', authUser.uid), { ...userData });
   return res;
 };
 
 export const addUserStats = async (uid) => {
   const userData = {
-    ownCourse: []
+    ownCourse: [],
+    role: 'student',
+    FCMToken: '',
   };
   const res = await setDoc(doc(db, 'userStats', uid), { ...userData }, { merge: true });
   return res;
+};
+
+export const addFMCToken = async (uid, token) => {
+  const docRef = doc(db, 'userStats', uid);
+  await updateDoc(docRef, {
+    FCMToken: token
+  });
+};
+
+export const addTutorToken = async (token) => {
+  const docRef = doc(db, 'tutorToken', 'token');
+  await updateDoc(docRef, {
+    sets: arrayUnion(token)
+  })
+};
+
+export const getTutorToken = async () => {
+  const docRef = doc(db, 'tutorToken', 'token');
+  const querySnapshot = await getDoc(docRef);
+  return querySnapshot.data();
+};
+
+export const getTutorList = async () => {
+  const docRef = doc(db, 'tutorToken', 'list');
+  const querySnapshot = await getDoc(docRef);
+  return querySnapshot.data();
 };
 
 export const checkStatsExist = async (uid) => {
@@ -60,6 +88,26 @@ export const getUserOwnCourse = async (id) => {
   return querySnapshot.data();
 };
 
+// export const getNoti = async (id) => {
+//   var noti;
+//   const snap = onSnapshot(doc(db, 'userStats', id), (doc) => {
+//     console.log("Current data: ", doc.data().noti);
+//     noti = doc.data().noti;
+//   });
+//   console.log(noti);
+//   return noti;
+// };
+
+export const addNoti = async(data) => {
+  let tutorList = await getTutorList();
+  tutorList.ids.forEach(tutor => {
+    tutor = tutor.replace(/\s/g, '');
+    const docRef = doc(db, 'userStats', tutor);
+    updateDoc(docRef, {
+      noti: arrayUnion(data)
+    })
+  });
+}
 
 // QUESTION ----
 

@@ -11,11 +11,12 @@ const PremiumPage = () => {
           name="description"
           content="SOLVE support your practicing journey"
         />
+        <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/bacon.svg" />
       </Head>
       <main>
         <div className="blank-box">
-          <h1>Premium Page</h1>
+          <h1>Answer Page</h1>
           <div>There is nothing here at the moment</div>
         </div>
       </main>

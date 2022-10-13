@@ -20,7 +20,7 @@ const CourseSlider = (props) => {
           <CourseSlideItem
             id={courseData.id}
             name={courseData.name}
-            image={courseData.image ? courseData.image : defaultImg}
+            image={courseData.img ? courseData.img : defaultImg}
             key={index}
           />
         ))}

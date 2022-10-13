@@ -5,6 +5,11 @@ const nextConfig = {
   images: {
     domains: ['firebasestorage.googleapis.com', 'picsum.photos', 'lh3.googleusercontent.com'],
   },
+  experimental: {
+    images: {
+      allowFutureImage: true
+    }
+},
 }
 
 module.exports = {

@@ -2,36 +2,46 @@ import { useEffect, useState } from 'react';
 import {
   faHouse,
   faDisplay,
-  faRocket,
+  faBell,
   faLightbulb,
   faBars,
+  faMessage,
 } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/router';
 
+import { useAuth } from '../../src/lib/auth-service';
 import NavItemMobile from './NavItemMobile';
 import styles from './NavBar.module.css';
 
-const MENU_LIST = [
+const STUDENT_MENU_LIST = [
   { text: 'Home', href: '/', icon: faHouse },
   { text: 'My Courses', href: '/my-courses', icon: faDisplay },
-  { text: 'Premium', href: '/premium', icon: faRocket },
+  { text: 'Notification', href: '/notification', icon: faBell },
   { text: 'Analyze', href: '/analyze', icon: faLightbulb },
   { text: 'Setting', href: '/setting', icon: faBars },
 ];
 
-const NavBar = () => {
-  const [windowDimension, setWindowDimension] = useState(null);
+const TUTOR_MENU_LIST = [
+  { text: 'Home', href: '/', icon: faHouse },
+  { text: 'My Answer', href: '/my-answers', icon: faMessage },
+  { text: 'Notification', href: '/notification', icon: faBell },
+  { text: 'Analyze', href: '/analyze', icon: faLightbulb },
+  { text: 'Setting', href: '/setting', icon: faBars },
+];
+
+const NavBar = (props) => {
   const [activeIdx, setActiveIdx] = useState(0);
 
+  const { role } = useAuth();
   const router = useRouter();
+  const activeList = (role == 'student' ? STUDENT_MENU_LIST : TUTOR_MENU_LIST)
 
   useEffect(() => {
-    setWindowDimension(window.innerWidth);
     switch (router.pathname) {
       case '/my-courses':
         setActiveIdx(1);
         break;
-      case '/premium':
+      case '/notification':
         setActiveIdx(2);
         break;
       case '/analyze':
@@ -43,23 +53,12 @@ const NavBar = () => {
     }
   }, []);
 
-  useEffect(() => {
-    function handleResize() {
-      setWindowDimension(window.innerWidth);
-    }
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const isMobile = windowDimension <= 640;
-
   return (
     <>
-      {isMobile ? (
+      {props.isMobile ? (
         <div className={styles['nav-mobile-container']}>
           <div className={styles['nav-mobile-items-wrapper']}>
-            {MENU_LIST.map((menu, index) => (
+            {activeList.map((menu, index) => (
               <div
                 onClick={() => {
                   setActiveIdx(index);

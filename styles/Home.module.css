@@ -8,6 +8,15 @@
   padding: 2rem 0.75rem 4rem;
 }
 
+.user-progress {
+  display: flex;
+}
+
+.user-chart {
+  position: relative;
+  width: 50%;
+}
+
 .footer {
   display: flex;
   flex: 1;

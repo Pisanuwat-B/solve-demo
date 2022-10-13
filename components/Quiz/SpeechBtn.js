@@ -4,18 +4,23 @@ import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 
-import { getHelperByID } from '../../src/utils/db';
+import { useAuth } from '../../src/lib/auth-service';
+import { getHelperByID, addNoti } from '../../src/utils/db';
 
 import styles from './SpeechBtn.module.css';
 
 //---------------------- COMPONENT ---------------------------
 
 const SpeechBtn = (props) => {
+  const { user } = useAuth();
+
   const [speechActive, setSpeechActive] = useState(false);
   const [speech, setSpeech] = useState('');
   const [helperData, setHelperData] = useState('');
   const [helperUrl, setHelperUrl] = useState('');
+  const [isHelperImg, setIsHelperImg] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
 
@@ -74,20 +79,44 @@ const SpeechBtn = (props) => {
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
-        getHelper(result.tokens);
+        getHelper(result);
       });
   };
 
-  const getHelper = (resultTokenArray) => {
+  const getHelper = (result) => {
+    var highestIndex = 0;
+    var hitPercentage = 0;
     for (var i in helperData.sets) {
-      let match = comparer(resultTokenArray, helperData.sets[i].token);
-      if (match) {
-        handleOpenModal();
-        return setHelperUrl(helperData.sets[i].url);
+      let newHit = comparer(result.tokens, helperData.sets[i].tokens);
+      if (newHit > hitPercentage) {
+        highestIndex = i
+        hitPercentage = newHit
       }
     }
-    console.log('no match');
-    return setHelperUrl('https://firebasestorage.googleapis.com/v0/b/solve-f1778.appspot.com/o/helper%2Fhelper0.png?alt=media&token=23354274-68d0-4549-8061-b603ce8b0f28');
+
+    console.log('highest index: ', highestIndex, 'hit percentage: ', hitPercentage)
+    console.log(helperData.sets[i].helperId)
+
+    if (hitPercentage) {
+      if (helperData.sets[i].imgUrl) {
+        setIsHelperImg(true);
+      }
+      handleOpenModal();
+      return setHelperUrl(helperData.sets[highestIndex].url);
+    } else {
+      console.log('no match');
+      console.log('Question: ', props.questionId,'User: ', user.uid, result.normalized);
+
+      let data = {
+        questionId: props.questionId,
+        studentId: user.uid,
+        question: result.normalized,
+      };
+      // addNoti(data);
+    }
+
+    // handleOpenModal();
+    // return setHelperUrl('https://firebasestorage.googleapis.com/v0/b/solve-f1778.appspot.com/o/helper%2Fhelper0.png?alt=media&token=23354274-68d0-4549-8061-b603ce8b0f28');
   };
 
   const comparer = (arr1, arr2) => {
@@ -100,7 +129,14 @@ const SpeechBtn = (props) => {
         }
       }
     }
-    return hit;
+    console.log(hit)
+    let hitPercentage = hit / arr2.length;
+    console.log('Hit Percentage: ', hitPercentage);
+    if (hitPercentage > 0.5) {
+      return hitPercentage;
+    } else {
+      return 0;
+    }
   };
 
   return (
@@ -113,7 +149,13 @@ const SpeechBtn = (props) => {
       </div>
       <Modal open={openModal} onClose={handleCloseModal}>
         <Box sx={boxStyle}>
-          <Image src={helperUrl} alt="helper" width={300} height={200} />
+          {isHelperImg ? (
+            <Image src={helperUrl} alt="helper" width={300} height={200} />
+          ) : (
+            <video width="100%" height="auto" controls>
+              <source src={helperUrl} type="video/mp4" />
+            </video>
+          )}
         </Box>
       </Modal>
     </div>

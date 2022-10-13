@@ -45,6 +45,18 @@ const CoursePage = () => {
       <Header />
       <main>
         <CourseDetail {...courseData} own={own} onClick={handleBuy} id={courseID}/>
+        {(own && courseData.content) && (
+        <div>
+          {courseData.content.map((content, index) => (
+            <div style={{textAlign: 'center', margin: '20px' }} key={index}>
+              <p>เนื้อหาคลิปที่ {index + 1}</p>
+              <video width="100%" height="auto" controls>
+                <source src={content} type="video/mp4" />
+              </video>
+            </div>
+          ))}
+        </div>
+        )}
       </main>
     </>
   );

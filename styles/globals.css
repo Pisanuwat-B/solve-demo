@@ -31,3 +31,27 @@ a {
   transform: translate(-50%, -50%);
   text-align: center;
 }
+
+.mycourse-container {
+  min-height: calc(100vh - 163px);
+  background: #f1f1f1;
+}
+
+@media (max-width: 899px) {
+  .main-container {
+    max-width: 767px;
+    margin: auto;
+  }
+}
+@media (min-width: 900px) {
+  .main-container {
+    max-width: 900px;
+    margin: auto;
+  }
+}
+@media (min-width: 1200px) {
+  .main-container {
+    max-width: 1200px;
+    margin: auto;
+  }
+}

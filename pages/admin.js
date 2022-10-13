@@ -88,6 +88,7 @@ const AdminPage = () => {
           name="description"
           content="SOLVE support your practicing journey"
         />
+        <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/bacon.svg" />
       </Head>
       <main>

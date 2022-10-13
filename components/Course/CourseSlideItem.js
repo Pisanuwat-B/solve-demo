@@ -5,6 +5,7 @@ import styles from './CourseSlideItem.module.css';
 
 const CourseSlideItem = (props) => {
   const testsrc = '/100.png';
+
   return (
     <Link href={"/course/" + props.id}>
       <div className={styles['course-item']}>

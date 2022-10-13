@@ -7,7 +7,6 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import { useRouter } from 'next/router';
 import { AuthProvider } from '../src/lib/auth-service';
-import { getPopularCourse, getLestPopularCourse } from '../src/utils/db';
 
 import NavBar from '../components/Layout/NavBar';
 config.autoAddCss = false;
@@ -23,31 +22,33 @@ console.error = (...args) => {
 
 function App({ Component, pageProps }) {
   const router = useRouter();
-  const showNav =
-    router.pathname === '/practice' || router.pathname === '/signin'
-      ? false
-      : true;
+  const showNav = router.pathname === '/signin' ? false : true;
 
-  const [popularCourses, setPopularCourses] = useState([]);
-  const [leastPopularCourses, setLeastPopularCourses] = useState([]);
+  const [windowDimension, setWindowDimension] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      setPopularCourses(await getPopularCourse());
-      setLeastPopularCourses(await getLestPopularCourse());
-    };
-    fetchData();
+    setWindowDimension(window.innerWidth);
   }, []);
 
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimension(window.innerWidth);
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const isMobile = windowDimension <= 640;
+
   pageProps = {
-    popularCourses: popularCourses,
-    leastPopularCourses: leastPopularCourses,
+    isMobile: isMobile,
   };
 
   return (
     <>
       <AuthProvider>
-        {showNav && <NavBar />}
+        {showNav && <NavBar isMobile={isMobile}/>}
         <Component {...pageProps} />
       </AuthProvider>
     </>

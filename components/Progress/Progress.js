@@ -7,7 +7,7 @@ const Progress = (props) => {
   return (
     <div className={styles.progress}>
       <CurrentProgress />
-      <FullwidthBtn color="red" size="big">ผลวิเคราะห์ของฉันด้วย AI &gt;</FullwidthBtn>
+      <FullwidthBtn color="red" size="big">ผลวิเคราะห์ของฉัน &gt;</FullwidthBtn>
     </div>
   );
 };

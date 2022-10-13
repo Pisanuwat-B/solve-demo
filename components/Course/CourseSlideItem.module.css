@@ -15,3 +15,9 @@
 .course-name {
   font-size: 14px;
 }
+
+@media (min-width: 641px) {
+  .course-item {
+    width: 200px;
+  }
+}

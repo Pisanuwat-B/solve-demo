@@ -30,9 +30,9 @@ const CoursePage = () => {
       const fetchData = async () => {
         setUserCourse(await getUserOwnCourse(user.uid));
       };
-      fetchData()
+      fetchData();
     }
-  }, [user, userCourse])
+  }, [user, userCourse]);
 
   return (
     <>
@@ -42,10 +42,19 @@ const CoursePage = () => {
           name="description"
           content="SOLVE support your practicing journey"
         />
+        <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/bacon.svg" />
       </Head>
       <Header />
-      <main>{!loader ? <div><UserCourse courses={userCourse.ownCourse}/></div> : <div>{notice}</div>}</main>
+      <main>
+        {!loader ? (
+          <div className='mycourse-container'>
+            <UserCourse courses={userCourse.ownCourse} />
+          </div>
+        ) : (
+          <div>{notice}</div>
+        )}
+      </main>
     </>
   );
 };

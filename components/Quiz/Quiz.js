@@ -1,4 +1,5 @@
-import Image from 'next/image';
+// import Image from 'next/image';
+import Image from 'next/future/image';
 import { useState, useEffect } from 'react';
 
 import FullwidthBtn from '../UI/FullwidthBtn';
@@ -6,42 +7,6 @@ import SpeechBtn from './SpeechBtn';
 
 // import placeholderImg from '../../public/placeholder.png';
 import styles from './Quiz.module.css';
-
-const dummyQuestion = [
-  {
-    id: 'demo001',
-    question: 'จงแยกตัวประกอบของ xxxxxxx',
-    answerOptions: [
-      { answer: 'แยกตัวประกอบ choice 1' },
-      { answer: 'แยกตัวประกอบ choice 2' },
-      { answer: 'แยกตัวประกอบ choice 3', isCorrect: true },
-      { answer: 'All of the above' },
-    ],
-    help: 'นี่คือวิธีแยกตัวประกอบ',
-  },
-  {
-    id: 'demo002',
-    question: 'จงแยกพหุนามของ xxxxxxx',
-    answerOptions: [
-      { answer: 'แยกพหุนาม choice 1' },
-      { answer: 'แยกพหุนาม choice 2' },
-      { answer: 'แยกพหุนาม choice 3', isCorrect: true },
-      { answer: 'All of the above' },
-    ],
-    help: 'นี่คือวิธีแยกพหุนาม',
-  },
-  {
-    id: 'demo003',
-    question: 'จงแยกเงาพันร่าง xxxxxxx',
-    answerOptions: [
-      { answer: 'แยกเงาพันร่าง choice 1' },
-      { answer: 'แยกเงาพันร่าง choice 2' },
-      { answer: 'แยกเงาพันร่าง choice 3', isCorrect: true },
-      { answer: 'All of the above' },
-    ],
-    help: 'นี่คือวิธีแยกเงาพันร่าง',
-  },
-];
 
 const Quiz = (props) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -57,14 +22,14 @@ const Quiz = (props) => {
   };
 
   const handleCheck = (e) => {
-    console.log(e.target.id, e.target.labels.textContent)
+    console.log(e.target.id, e)
   }
 
   const handleNext = () => {
     setShowHelp(false);
     setRadio(false);
     const nextQues = currentQuestion + 1;
-    nextQues < dummyQuestion.length && setCurrentQuestion(nextQues);
+    nextQues < props.data.length && setCurrentQuestion(nextQues);
   };
 
   const handleHelp = () => {
@@ -98,6 +63,7 @@ const Quiz = (props) => {
               layout="responsive"
               width={500}
               height={300}
+              style={{ width: '100%', height: 'auto' }}
             />
           </div>
           <div className={styles['quiz-answer-container']}>
@@ -141,7 +107,16 @@ const Quiz = (props) => {
             </div>
             {showHelp && (
               <div className="quiz-help-box">
-                <div className='quiz-solution'>SOLUTION</div>
+                <div className='quiz-solution'>
+                <Image
+                  src={props.data[currentQuestion].solution}
+                  alt="Solution"
+                  layout="responsive"
+                  width={500}
+                  height={2000}
+                  style={{ width: '100%', height: 'auto' }}
+                />
+                </div>
               </div>
             )}
             <SpeechBtn questionId={props.data[currentQuestion].questionId}/>
