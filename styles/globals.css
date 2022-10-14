@@ -55,3 +55,40 @@ a {
     margin: auto;
   }
 }
+
+
+/* canvas */
+.rec-head {
+  text-align: center;
+  font-size: 18px;
+  margin: 10px;
+}
+.vidbox {
+  text-align: center;
+}
+.vidbox video {
+  width: calc(100vw - 30px);
+}
+.btnbox {
+  text-align: center;
+}
+.btnbox button {
+  margin: 5px;
+}
+.uploadbtn {
+  text-align: center;
+  color: #1976d2;
+  border: 1px solid rgba(25, 118, 210, 0.5);
+  padding: 5px 15px;
+  border-radius: 4px;
+  margin-left: 5px;
+  vertical-align: middle;
+}
+
+.canvas-area {
+  margin: 10px;
+}
+.canvas-area canvas {
+  /* width: 100%;
+  height: 500px; */
+}

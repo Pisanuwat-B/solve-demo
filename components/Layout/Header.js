@@ -36,7 +36,9 @@ const Header = () => {
           </div>
           <div className={styles['btn-container']}>
             <Link href='/signin'>
-              <div className={styles.btn}>LOGIN</div>
+              <a>
+                <div className={styles.btn}>LOGIN</div>
+              </a>
             </Link>
           </div>
         </header>

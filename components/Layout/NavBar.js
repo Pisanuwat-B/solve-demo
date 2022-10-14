@@ -75,12 +75,16 @@ const NavBar = (props) => {
       ) : (
         <div className={styles['nav-desktop-container']}>
           <Link href={'/'}>
-            <Image className={styles['nav-desktop-logo']} src={'/logo.png'} alt="Placeholder" width={60} height={60} />
+            <a>
+              <Image className={styles['nav-desktop-logo']} src={'/logo.png'} alt="Placeholder" width={60} height={60} />
+            </a>
           </Link>
           <div className={styles['nav-desktop-items-wrapper']}>
             {activeList.map((menu, index) => (
               <Link href={menu.href} key={index}>
-                <div className={styles['nav-desktop-item']}>{menu.text}</div>
+                <a>
+                  <div className={styles['nav-desktop-item']}>{menu.text}</div>
+                </a>
               </Link>
             ))}
           </div>
