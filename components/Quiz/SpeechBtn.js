@@ -158,7 +158,7 @@ const SpeechBtn = (props) => {
       <div className={styles['modal-no-match']}>
         <div>ไม่พบคำถามนี้ในคลังข้อมูลของเรา</div>
         <div>ต้องการส่งคำถามนี้ </div>
-        <div>"{notificationData.question}"</div>
+        <div>&ldquo;{notificationData.question}&ldquo;</div>
         <div>ให้ติวเตอร์ช่วยหาคำตอบหรือไม่</div>
         <div>
           <Button variant="outlined" onClick={addNotification}>ต้องการ</Button>

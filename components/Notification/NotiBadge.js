@@ -3,13 +3,15 @@ import styles from './NotiBadge.module.css';
 
 const NotiBadge = (props) => {
   return (
-    <div className={styles['notibox']} >
-      <div>
-        <div>Student has question</div>
-        <div>{props.questionId}</div>
-        <div>{props.question}</div>
+    // <Link href="/course">
+      <div className={styles['notibox']} >
+        <div>
+          <div>Student has question</div>
+          <div>Question ID: {props.questionId}</div>
+          <div>Student question: {props.question}</div>
+        </div>
       </div>
-    </div>
+    {/* </Link> */}
   );
 };
 
