@@ -3,6 +3,7 @@ import Image from 'next/image';
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
+import { Button } from '@mui/material';
 
 import { useAuth } from '../../src/lib/auth-service';
 import { getHelperByID, addNoti } from '../../src/utils/db';
@@ -19,6 +20,8 @@ const SpeechBtn = (props) => {
   const [helperData, setHelperData] = useState('');
   const [helperUrl, setHelperUrl] = useState('');
   const [isHelperImg, setIsHelperImg] = useState(false);
+  const [isMatch, setIsMatch] = useState(false);
+  const [notificationData, setNotificationData] = useState([]);
   const [openModal, setOpenModal] = useState(false);
 
   const handleOpenModal = () => setOpenModal(true);
@@ -89,47 +92,93 @@ const SpeechBtn = (props) => {
     for (var i in helperData.sets) {
       let newHit = comparer(result.tokens, helperData.sets[i].tokens);
       if (newHit > hitPercentage) {
-        highestIndex = i
-        hitPercentage = newHit
+        highestIndex = i;
+        hitPercentage = newHit;
       }
     }
 
-    console.log('highest index: ', highestIndex, 'hit percentage: ', hitPercentage)
-    console.log(helperData.sets[i].helperId)
+    console.log(
+      'highest index: ',
+      highestIndex,
+      'hit percentage: ',
+      hitPercentage
+    );
+    console.log(helperData.sets[i].helperId);
 
     if (hitPercentage) {
       if (helperData.sets[i].imgUrl) {
         setIsHelperImg(true);
       }
+      setIsMatch(true);
       handleOpenModal();
       return setHelperUrl(helperData.sets[highestIndex].url);
     } else {
       console.log('no match');
-      console.log('Question: ', props.questionId,'User: ', user.uid, result.normalized);
+      console.log(
+        'Question: ',
+        props.questionId,
+        'User: ',
+        user.uid,
+        result.normalized
+      );
 
       let data = {
         questionId: props.questionId,
         studentId: user.uid,
         question: result.normalized,
       };
-      addNoti(data);
-    }
+      setIsMatch(false);
+      setNotificationData(data);
 
-    // handleOpenModal();
+      handleOpenModal();
+    }
     // return setHelperUrl('https://firebasestorage.googleapis.com/v0/b/solve-f1778.appspot.com/o/helper%2Fhelper0.png?alt=media&token=23354274-68d0-4549-8061-b603ce8b0f28');
   };
+
+  const addNotification = () => {
+    addNoti(notificationData);
+    handleCloseModal();
+  };
+
+  var modalContent;
+  if (isMatch) {
+    if (isHelperImg) {
+      modalContent = (
+        <Image src={helperUrl} alt="helper" width={300} height={200} />
+      );
+    } else {
+      modalContent = (
+        <video width="100%" height="auto" controls>
+          <source src={helperUrl} type="video/mp4" />
+        </video>
+      );
+    }
+  } else {
+    modalContent = (
+      <div className={styles['modal-no-match']}>
+        <div>ไม่พบคำถามนี้ในคลังข้อมูลของเรา</div>
+        <div>ต้องการส่งคำถามนี้ </div>
+        <div>"{notificationData.question}"</div>
+        <div>ให้ติวเตอร์ช่วยหาคำตอบหรือไม่</div>
+        <div>
+          <Button variant="outlined" onClick={addNotification}>ต้องการ</Button>
+          <Button variant="outlined" onClick={handleCloseModal}>ไม่</Button>
+        </div>
+      </div>
+    );
+  }
 
   const comparer = (arr1, arr2) => {
     console.log(arr1, arr2);
     let hit = 0;
     for (var i in arr1) {
       for (var j in arr2) {
-        if (arr1[i] === arr2[j]) {
+        if (arr1[i].toLowerCase() === arr2[j].toLowerCase()) {
           hit += 1;
         }
       }
     }
-    console.log(hit)
+    console.log(hit);
     let hitPercentage = hit / arr2.length;
     console.log('Hit Percentage: ', hitPercentage);
     if (hitPercentage > 0.5) {
@@ -148,15 +197,7 @@ const SpeechBtn = (props) => {
         <div>{speech}</div>
       </div>
       <Modal open={openModal} onClose={handleCloseModal}>
-        <Box sx={boxStyle}>
-          {isHelperImg ? (
-            <Image src={helperUrl} alt="helper" width={300} height={200} />
-          ) : (
-            <video width="100%" height="auto" controls>
-              <source src={helperUrl} type="video/mp4" />
-            </video>
-          )}
-        </Box>
+        <Box sx={boxStyle}>{modalContent}</Box>
       </Modal>
     </div>
   );

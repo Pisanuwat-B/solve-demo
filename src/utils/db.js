@@ -48,6 +48,11 @@ export const changeToTutor = async (uid) => {
   await updateDoc(docRef, {
     role: 'tutor'
   });
+
+  const tutorDocRef = doc(db, 'tutorToken', 'list');
+  await updateDoc(docRef, {
+    ids: arrayUnion(uid)
+  })
 };
 
 export const addFMCToken = async (uid, token) => {
@@ -98,6 +103,7 @@ export const getUserOwnCourse = async (id) => {
 
 export const addNoti = async(data) => {
   let tutorList = await getTutorList();
+  console.log(tutorList);
   tutorList.ids.forEach(tutor => {
     tutor = tutor.replace(/\s/g, '');
     const docRef = doc(db, 'userStats', tutor);
