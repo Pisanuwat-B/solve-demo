@@ -13,7 +13,7 @@ const NotificationPage = () => {
 
   useEffect(() => {
     if (role === 'tutor') {
-      const fetchData = async () => {
+      const fetchTutorNotiData = async () => {
         const snap = onSnapshot(
           doc(db, 'userStats', 'FGAvYwb1qzXxCO2nQE1AEHWVApA3'),
           (doc) => {
@@ -22,9 +22,20 @@ const NotificationPage = () => {
           }
         );
       };
-      fetchData();
+      fetchTutorNotiData();
+    } else if (role === 'student' && user) {
+      const fetchStudentNotiData = async () => {
+        const snap = onSnapshot(
+          doc(db, 'userStats', user.uid),
+          (doc) => {
+            console.log(doc.data().noti);
+            setNoti(doc.data().noti);
+          }
+        );
+      };
+      fetchStudentNotiData();
     }
-  }, []);
+  }, [role, user]);
 
   return (
     <>
@@ -39,10 +50,9 @@ const NotificationPage = () => {
       </Head>
       <main>
         {noti ? (
-          // <NotiBadge data={noti}/>
           <div>
             {noti.map((notiData, index) => (
-              <NotiBadge {...notiData} key={index} />
+              <NotiBadge {...notiData} role={role} key={index} />
             ))}
           </div>
         ) : (

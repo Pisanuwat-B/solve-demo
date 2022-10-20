@@ -58,6 +58,9 @@ a {
 
 
 /* canvas */
+.canvas-page {
+  overscroll-behavior: contain;
+}
 .rec-head {
   text-align: center;
   font-size: 18px;
@@ -86,7 +89,8 @@ a {
 }
 
 .canvas-area {
-  margin: 10px;
+  margin: 5px;
+  touch-action: none;
 }
 .canvas-area canvas {
   /* width: 100%;

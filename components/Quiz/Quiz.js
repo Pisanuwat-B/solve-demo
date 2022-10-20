@@ -113,7 +113,7 @@ const Quiz = (props) => {
                   alt="Solution"
                   layout="responsive"
                   width={500}
-                  height={2000}
+                  height={200}
                   style={{ width: '100%', height: 'auto' }}
                 />
                 </div>

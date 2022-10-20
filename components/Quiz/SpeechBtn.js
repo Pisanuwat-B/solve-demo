@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
+import Image from 'next/future/image';
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
@@ -18,8 +18,7 @@ const SpeechBtn = (props) => {
   const [speechActive, setSpeechActive] = useState(false);
   const [speech, setSpeech] = useState('');
   const [helperData, setHelperData] = useState('');
-  const [helperUrl, setHelperUrl] = useState('');
-  const [isHelperImg, setIsHelperImg] = useState(false);
+  const [helperUrlArray, setHelperUrlArray] = useState([]);
   const [isMatch, setIsMatch] = useState(false);
   const [notificationData, setNotificationData] = useState([]);
   const [openModal, setOpenModal] = useState(false);
@@ -106,12 +105,9 @@ const SpeechBtn = (props) => {
     console.log(helperData.sets[i].helperId);
 
     if (hitPercentage) {
-      if (helperData.sets[i].imgUrl) {
-        setIsHelperImg(true);
-      }
       setIsMatch(true);
       handleOpenModal();
-      return setHelperUrl(helperData.sets[highestIndex].url);
+      setHelperUrlArray(helperData.sets[highestIndex].urls)
     } else {
       console.log('no match');
       console.log(
@@ -126,13 +122,12 @@ const SpeechBtn = (props) => {
         questionId: props.questionId,
         studentId: user.uid,
         question: result.normalized,
+        tokens: result.tokens,
       };
       setIsMatch(false);
       setNotificationData(data);
-
       handleOpenModal();
     }
-    // return setHelperUrl('https://firebasestorage.googleapis.com/v0/b/solve-f1778.appspot.com/o/helper%2Fhelper0.png?alt=media&token=23354274-68d0-4549-8061-b603ce8b0f28');
   };
 
   const addNotification = () => {
@@ -140,19 +135,40 @@ const SpeechBtn = (props) => {
     handleCloseModal();
   };
 
+  const isImage = (url) => {
+    const images = ["jpg", "gif", "png"]
+
+    const srcURL = new URL(url)
+    const extension = srcURL.pathname.split('.').at(-1)
+    if (images.includes(extension)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   var modalContent;
   if (isMatch) {
-    if (isHelperImg) {
-      modalContent = (
-        <Image src={helperUrl} alt="helper" width={300} height={200} />
-      );
-    } else {
-      modalContent = (
-        <video width="100%" height="auto" controls>
-          <source src={helperUrl} type="video/mp4" />
-        </video>
-      );
-    }
+    modalContent = (
+      <div className='helper-container'>
+        {helperUrlArray.map((url, index) => (
+          <div className={styles['media-container']} key={index}>
+            <div className='media-title'>คำตอบจาก example-tutor-{index + 1}</div>
+            {isImage(url) ? (
+            <div>
+              <Image src={url} alt="helper" layout="responsive" width={300} height={250} style={{ width: '100%', height: 'auto' }}/>
+            </div>
+            ) : (
+            <div>
+              <video width="100%" height="auto" controls>
+                <source src={url} type="video/mp4" />
+              </video>
+            </div>
+            )}
+          </div>
+        ))}
+      </div>
+    )
   } else {
     modalContent = (
       <div className={styles['modal-no-match']}>
@@ -197,7 +213,9 @@ const SpeechBtn = (props) => {
         <div>{speech}</div>
       </div>
       <Modal open={openModal} onClose={handleCloseModal}>
-        <Box sx={boxStyle}>{modalContent}</Box>
+        <Box sx={boxStyle}>
+          {modalContent}
+        </Box>
       </Modal>
     </div>
   );
@@ -216,4 +234,6 @@ const boxStyle = {
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+  maxHeight: '700px',
+  overflow: 'auto',
 };

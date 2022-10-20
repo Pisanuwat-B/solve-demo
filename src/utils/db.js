@@ -50,7 +50,7 @@ export const changeToTutor = async (uid) => {
   });
 
   const tutorDocRef = doc(db, 'tutorToken', 'list');
-  await updateDoc(docRef, {
+  await updateDoc(tutorDocRef, {
     ids: arrayUnion(uid)
   })
 };
@@ -113,6 +113,13 @@ export const addNoti = async(data) => {
   });
 }
 
+export const addStdentNoti = async(studentID, data) => {
+  const docRef = doc(db, 'userStats', studentID);
+  updateDoc(docRef, {
+    noti: arrayUnion(data)
+  })
+}
+
 // QUESTION ----
 
 export const addQuestion = async (courseID, data) => {
@@ -135,6 +142,13 @@ export const getHelperByID = async (id) => {
   const querySnapshot = await getDoc(docRef);
   return querySnapshot.data();
 };
+
+export const addNewHelper = async(questionID, data) => {
+  const docRef = doc(db, 'helper', questionID);
+  updateDoc(docRef, {
+    sets: arrayUnion(data)
+  })
+}
 
 // COURSE -----
 export const addOwnCourse = async (uid, courseId) => {
