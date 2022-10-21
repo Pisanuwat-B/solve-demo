@@ -206,8 +206,8 @@ const CanvasPage = () => {
 
       if (idx >= 0) {
         paper.beginPath();
-        paper.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
-        paper.lineTo(touches[i].pageX, touches[i].pageY);
+        paper.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY + 100);
+        paper.lineTo(touches[i].pageX, touches[i].pageY + 100);
         paper.lineWidth = 2;
         paper.strokeStyle = colorLine;
         paper.stroke();
@@ -229,8 +229,8 @@ const CanvasPage = () => {
         paper.lineWidth = 2;
         paper.fillStyle = colorLine;
         paper.beginPath();
-        paper.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
-        paper.lineTo(touches[i].pageX, touches[i].pageY);
+        paper.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY + 100);
+        paper.lineTo(touches[i].pageX, touches[i].pageY + 100);
         ongoingTouches.splice(idx, 1);  // remove it; we're done
       } else {
         console.log('can\'t figure out which touch to end');
