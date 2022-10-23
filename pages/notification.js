@@ -50,7 +50,7 @@ const NotificationPage = () => {
       </Head>
       <main>
         {noti ? (
-          <div>
+          <div className="noti-box">
             {noti.map((notiData, index) => (
               <NotiBadge {...notiData} role={role} key={index} />
             ))}

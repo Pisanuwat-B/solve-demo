@@ -57,6 +57,10 @@ a {
 }
 
 
+.noti-box {
+  margin-bottom: 70px;
+}
+
 /* canvas */
 .canvas-page {
   overscroll-behavior: contain;
